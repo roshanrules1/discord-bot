@@ -1,4 +1,5 @@
 import os
+from convert_to_mkv import convert_to_mp4
 
 
 def ytdl(url, file_format):
@@ -11,12 +12,13 @@ def ytdl(url, file_format):
             if (x := os.path.getsize("some.mp4") / (1024 * 1024)) < 8:
                 return [1, "already mp4"]
         elif "some.mkv" in os.listdir():
-            os.system(f"ffmpeg -i some.mkv -c:v copy -c:a aac -ac 6 some.mp4")
+            convert_to_mp4("some.mkv")
+            os.remove("some.mkv")
             print("converted to mp4.")
             if (x := os.path.getsize("some.mp4") / (1024 * 1024)) < 8:
                 return [2, "converted from mkv to mp4"]
         else:
-            os.system(f"ffmpeg -i some.webm -c:v copy -c:a aac -ac 6 some.mp4")
+            convert_to_mp4("some.webm")
             os.remove("some.webm")
             print("converted to mp4.")
             if (x := os.path.getsize("some.mp4") / (1024 * 1024)) < 8:

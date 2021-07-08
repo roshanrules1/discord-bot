@@ -46,7 +46,10 @@ async def help(ctx):
 async def on_message(message):
     if bot.user.mentioned_in(message):
         await message.channel.send("Hey!" + message.author.mention)
-        await ctx.send("https://tenor.com/view/hey-tom-hanks-forrest-gump-gif-5114770")
+        await message.channel.send(
+            "https://tenor.com/view/hey-tom-hanks-forrest-gump-gif-5114770"
+        )
+    await bot.process_commands(message)
 
 
 @bot.command(name="talk")
