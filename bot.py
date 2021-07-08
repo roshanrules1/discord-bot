@@ -7,8 +7,11 @@ from youtube_dl import ytdl
 
 load_dotenv()
 
-
-bot = commands.Bot(command_prefix="~", help_command=None)
+bot = commands.Bot(
+    command_prefix="~",
+    help_command=None,
+    activity=discord.Game(name="~help since 2021"),
+)
 
 
 @bot.command(name="help")
@@ -39,9 +42,11 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-@bot.command(name="say")
-async def say(ctx, *args):
-    await ctx.send(f"{' '.join(args)}")
+@bot.event
+async def on_message(message):
+    if bot.user.mentioned_in(message):
+        await message.channel.send("Hey!" + message.author.mention)
+        await ctx.send("https://tenor.com/view/hey-tom-hanks-forrest-gump-gif-5114770")
 
 
 @bot.command(name="talk")
