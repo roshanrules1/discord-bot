@@ -35,12 +35,11 @@ async def download(ctx, url):
     print(case)
     if case[0] == 1 or case[0] == 2 or case[0] == 3:
         await ctx.send(file=discord.File("some.mp4"))
+        os.remove("some.mp4")
     else:
-        await ctx.send(
-            """File too big
-        converted to mp3"""
-        )
+        await ctx.send("File too big, converted to mp3")
         await ctx.send(file=discord.File("some.mp3"))
+        os.remove("some.mp3")
 
 
 bot.run(os.getenv("TOKEN"))
