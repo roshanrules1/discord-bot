@@ -10,6 +10,9 @@ client = discord.Client()
 
 bot = commands.Bot(command_prefix="$")
 
+@client.event
+async def on_ready():
+    print(f"We have logged in as {client.user}"")
 
 @bot.command(name="say")
 async def say(ctx, *args):
