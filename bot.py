@@ -4,6 +4,21 @@ import os
 from dotenv import load_dotenv
 from tts import Text_to_speech
 from youtube_dl import ytdl
+from random import choice
+
+
+photo = [
+    "chump.png",
+    "clap.gif",
+    "creep.png",
+    "headshake.gif",
+    "heheboi.png",
+    "ohno.png",
+    "ramu.png",
+    "whaat.png",
+    "woah.png",
+    "ooo.jpeg",
+]
 
 load_dotenv()
 
@@ -34,11 +49,14 @@ async def help(ctx):
         value="`~talk <message>`",
         inline=True,
     )
+    embed.add_field(name="**Ramu**", value="`~ramu`", inline=True)
+
     embed.add_field(
         name="**Download**",
         value="`~download <url> <audio/video>`",
         inline=False,
     )
+
     await ctx.send(embed=embed)
 
 
@@ -50,6 +68,29 @@ async def on_message(message):
             "https://tenor.com/view/hey-tom-hanks-forrest-gump-gif-5114770"
         )
     await bot.process_commands(message)
+
+
+@bot.command(name="say")
+async def say(ctx, *args):
+    if args[0][2:-1].isnumeric():
+        channel = await bot.fetch_channel(args[0][2:-1])
+        if channel:
+            embed = discord.Embed(
+                title=" ".join(args[1:]), color=discord.Color.from_rgb(191, 187, 188)
+            )
+            await channel.send(embed=embed)
+    else:
+        channel = discord.utils.get(ctx.guild.text_channels, name=args[0])
+        if channel:
+            embed = discord.Embed(
+                title=" ".join(args[1:]), color=discord.Color.from_rgb(191, 187, 188)
+            )
+            await channel.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title=" ".join(args), color=discord.Color.from_rgb(191, 187, 188)
+            )
+            await ctx.send(embed=embed)
 
 
 @bot.command(name="talk")
@@ -65,6 +106,7 @@ async def talk(ctx, *args):
 @bot.command(name="download")
 async def download(ctx, url, arg):
     await ctx.send("Processing request...")
+    await ctx.send("Downloading be slow :sweat_smile:")
     format_ = arg
     case = ytdl(url, format_)
     print(case)
@@ -81,6 +123,19 @@ async def download(ctx, url, arg):
         await ctx.send(file=discord.File("some.mp3"))
         await ctx.send("Process completed, mp3!")
         os.remove("some.mp3")
+
+
+@bot.command(name="ramu")
+async def ramu(ctx):
+    image = choice(photo)
+    embed = discord.Embed(
+        title="One random picture of Ramu",
+        color=discord.Color.from_rgb(191, 187, 188),
+        url="https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    )
+    file = discord.File(image)
+    embed.set_image(url=f"attachment://{image}")
+    await ctx.send(file=file, embed=embed)
 
 
 bot.run(os.getenv("TOKEN"))
