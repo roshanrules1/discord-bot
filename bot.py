@@ -3,9 +3,8 @@ import discord
 import os
 from dotenv import load_dotenv
 from tts import Text_to_speech
-from youtube_dl import ytdl
+from some import ytdl
 from random import choice
-
 
 photo = [
     "chump.png",
@@ -23,9 +22,9 @@ photo = [
 load_dotenv()
 
 bot = commands.Bot(
-    command_prefix="~",
+    command_prefix="|",
     help_command=None,
-    activity=discord.Game(name="~help since 2021"),
+    activity=discord.Game(name="|help since 2021"),
 )
 
 
@@ -43,17 +42,17 @@ async def help(ctx):
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/853168510440439821/862710006151118848/gojo.jpg"
     )
-    embed.add_field(name="**Say**", value="`~say <message>`", inline=True)
+    embed.add_field(name="**Say**", value="`|say <message>`", inline=True)
     embed.add_field(
         name="**Talk**",
-        value="`~talk <message>`",
+        value="`|talk <message>`",
         inline=True,
     )
-    embed.add_field(name="**Ramu**", value="`~ramu`", inline=True)
+    embed.add_field(name="**Ramu**", value="`|ramu`", inline=True)
 
     embed.add_field(
         name="**Download**",
-        value="`~download <url> <audio/video>`",
+        value="`|download <url> <audio/video>`",
         inline=False,
     )
 
@@ -63,10 +62,7 @@ async def help(ctx):
 @bot.event
 async def on_message(message):
     if bot.user.mentioned_in(message):
-        await message.channel.send("Hey!" + message.author.mention)
-        await message.channel.send(
-            "https://tenor.com/view/hey-tom-hanks-forrest-gump-gif-5114770"
-        )
+        await message.channel.send("My prefix here is | " + message.author.mention)
     await bot.process_commands(message)
 
 
@@ -104,7 +100,7 @@ async def talk(ctx, *args):
 
 
 @bot.command(name="download")
-async def download(ctx, url, arg):
+async def download(ctx, url, arg=None):
     await ctx.send("Processing request...")
     await ctx.send("Downloading be slow :sweat_smile:")
     format_ = arg
@@ -114,24 +110,19 @@ async def download(ctx, url, arg):
         await ctx.send(file=discord.File("some.mp4"))
         await ctx.send("Process completed, mp4!")
         os.remove("some.mp4")
+    elif case[0] == 4:
+        await ctx.send(file=discord.File("some.mp3"))
+        await ctx.send("Process completed, mp3!")
+        os.remove("some.mp3")
     elif case[0] == 5:
-        await ctx.send(file=discord.File("some.mp3"))
-        await ctx.send("Process completed, mp3!")
-        os.remove("some.mp3")
-    else:
-        await ctx.send("File too big, converted to mp3")
-        await ctx.send(file=discord.File("some.mp3"))
-        await ctx.send("Process completed, mp3!")
-        os.remove("some.mp3")
+        await ctx.send("Sorry, file too big!")
 
 
 @bot.command(name="ramu")
 async def ramu(ctx):
     image = choice(photo)
     embed = discord.Embed(
-        title="One random picture of Ramu",
         color=discord.Color.from_rgb(191, 187, 188),
-        url="https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     )
     file = discord.File(image)
     embed.set_image(url=f"attachment://{image}")
