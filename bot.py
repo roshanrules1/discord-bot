@@ -10,20 +10,6 @@ from youtube import youtube
 from google_ import google
 from image import get_google_img
 
-# from math_calc import calc_string
-
-photo = [
-    "chump.png",
-    "clap.gif",
-    "creep.png",
-    "headshake.gif",
-    "heheboi.png",
-    "ohno.png",
-    "ramu.png",
-    "whaat.png",
-    "woah.png",
-    "ooo.jpeg",
-]
 
 load_dotenv()
 
@@ -80,14 +66,6 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-# @bot.command(name="calc")
-# async def calc(ctx, *args):
-#     try:
-#         await ctx.send(calc_string(" ".join(args)))
-#     except:
-#         await ctx.send("Please enter only 2 values!")
-
-
 @bot.command(name="say")
 async def say(ctx, *args):
     if args[0][2:-1].isnumeric():
@@ -135,17 +113,6 @@ async def download(ctx, url, arg=None):
         os.remove("some.mp3")
     elif case[0] == 5:
         await ctx.send("Sorry, file too big!")
-
-
-@bot.command(name="ramu")
-async def ramu(ctx):
-    image = choice(photo)
-    embed = discord.Embed(
-        color=discord.Color.from_rgb(191, 187, 188),
-    )
-    file = discord.File(image)
-    embed.set_image(url=f"attachment://{image}")
-    await ctx.send(file=file, embed=embed)
 
 
 @bot.command(name="youtube")
