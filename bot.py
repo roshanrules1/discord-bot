@@ -3,8 +3,14 @@ import discord
 import os
 from dotenv import load_dotenv
 from tts import Text_to_speech
-from some import ytdl
+from downloader import ytdl
 from random import choice
+from subprocess import Popen
+from youtube import youtube
+from google_ import google
+from image import get_google_img
+
+# from math_calc import calc_string
 
 photo = [
     "chump.png",
@@ -26,6 +32,11 @@ bot = commands.Bot(
     help_command=None,
     activity=discord.Game(name="|help since 2021"),
 )
+
+
+@bot.event
+async def on_ready():
+    print(f"{bot.user} has connected to Discord!")
 
 
 @bot.command(name="help")
@@ -50,20 +61,31 @@ async def help(ctx):
     )
     embed.add_field(name="**Ramu**", value="`|ramu`", inline=True)
 
+    embed.add_field(name="**Google**", value="`|google <query>`", inline=True)
+    embed.add_field(name="**Images**", value="`|image <query>`", inline=True)
+    embed.add_field(name="**Youtube**", value="`|youtube <query>`", inline=True)
+
     embed.add_field(
         name="**Download**",
         value="`|download <url> <audio/video>`",
         inline=False,
     )
-
     await ctx.send(embed=embed)
 
 
 @bot.event
 async def on_message(message):
-    if bot.user.mentioned_in(message):
+    if bot.user.mentioned_in(message) and "@!862927269822464040" in message.content:
         await message.channel.send("My prefix here is | " + message.author.mention)
     await bot.process_commands(message)
+
+
+# @bot.command(name="calc")
+# async def calc(ctx, *args):
+#     try:
+#         await ctx.send(calc_string(" ".join(args)))
+#     except:
+#         await ctx.send("Please enter only 2 values!")
 
 
 @bot.command(name="say")
@@ -83,10 +105,7 @@ async def say(ctx, *args):
             )
             await channel.send(embed=embed)
         else:
-            embed = discord.Embed(
-                title=" ".join(args), color=discord.Color.from_rgb(191, 187, 188)
-            )
-            await ctx.send(embed=embed)
+            await ctx.send(" ".join(args))
 
 
 @bot.command(name="talk")
@@ -127,6 +146,32 @@ async def ramu(ctx):
     file = discord.File(image)
     embed.set_image(url=f"attachment://{image}")
     await ctx.send(file=file, embed=embed)
+
+
+@bot.command(name="youtube")
+async def youtube_(ctx, *args):
+    await ctx.send(youtube(" ".join(args)))
+
+
+@bot.command(name="google")
+async def google_search(ctx, *args):
+    embed = discord.Embed(
+        title="Search results",
+        color=discord.Color.from_rgb(191, 187, 188),
+    )
+    for index, url in enumerate(google(" ".join(args))):
+        embed.add_field(name="\u200b", value=f"**{index+1}** .<{url}>", inline=False)
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="image")
+async def google_image(ctx, *args):
+    embed = discord.Embed(color=discord.Color.from_rgb(191, 187, 188))
+    if (url := get_google_img(" ".join(args))) != None:
+        embed.set_image(url=url)
+        await ctx.send(embed=embed)
+    else:
+        await ctx.send("Could not find any image!")
 
 
 bot.run(os.getenv("TOKEN"))
