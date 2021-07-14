@@ -45,8 +45,6 @@ async def help(ctx):
         value="`|talk <message>`",
         inline=True,
     )
-    embed.add_field(name="**Ramu**", value="`|ramu`", inline=True)
-
     embed.add_field(name="**Google**", value="`|google <query>`", inline=True)
     embed.add_field(name="**Images**", value="`|image <query>`", inline=True)
     embed.add_field(name="**Youtube**", value="`|youtube <query>`", inline=True)
