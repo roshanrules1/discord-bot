@@ -6,7 +6,6 @@ from tts import Text_to_speech
 from downloader import ytdl
 from random import choice
 from youtube import youtube
-<<<<<<< HEAD
 import json
 import aiohttp
 import random
