@@ -6,7 +6,6 @@ from tts import Text_to_speech
 from downloader import ytdl
 from random import choice
 from youtube import youtube
-<<<<<<< HEAD
 import json
 import aiohttp
 import random
@@ -24,11 +23,7 @@ print(
     _[ [ \  /_/)"""
 )
 print(".\n.\n.\nStarting up fox-y...🦊")
-=======
-from google_ import google
-from image import get_google_img
 
->>>>>>> 6189bca42932e93e54700cee3d10df1d28d70a00
 
 load_dotenv()
 
@@ -64,11 +59,6 @@ async def help(ctx):
         value="`|talk <message>`",
         inline=True,
     )
-<<<<<<< HEAD
-=======
-    embed.add_field(name="**Google**", value="`|google <query>`", inline=True)
-    embed.add_field(name="**Images**", value="`|image <query>`", inline=True)
->>>>>>> 6189bca42932e93e54700cee3d10df1d28d70a00
     embed.add_field(name="**Youtube**", value="`|youtube <query>`", inline=True)
     embed.add_field(name="**Emoji**", value="`|emoji <emote name>`", inline=True)
     embed.add_field(name="**Hug**", value="`|hug <person>`", inline=True)
@@ -91,7 +81,6 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-<<<<<<< HEAD
 @bot.command(name="hug")
 async def hug(ctx, arg=""):
 
@@ -112,17 +101,6 @@ async def hug(ctx, arg=""):
     await ctx.send(embed=embed)
 
 
-@bot.command()
-async def emoji(ctx, emojiname):
-    for i in bot.guilds:
-        emoji = discord.utils.get(i.emojis, name=emojiname)
-        if emoji is not None:
-            await ctx.message.delete()
-            await ctx.send(emoji)
-
-
-=======
->>>>>>> 6189bca42932e93e54700cee3d10df1d28d70a00
 @bot.command(name="say")
 async def say(ctx, *args):
     if args[0][2:-1].isnumeric():
@@ -159,7 +137,6 @@ async def talk(ctx, *args):
 @bot.command(name="download")
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def download(ctx, url, arg=None):
-<<<<<<< HEAD
     try:
         await ctx.send("Processing request...")
         format_ = arg
@@ -187,23 +164,6 @@ async def download(ctx, url, arg=None):
             inline=True,
         )
         await ctx.send(embed=embed)
-=======
-    await ctx.send("Processing request...")
-    await ctx.send("Downloading be slow :sweat_smile:")
-    format_ = arg
-    case = ytdl(url, format_)
-    print(case)
-    if case[0] == 1 or case[0] == 2 or case[0] == 3:
-        await ctx.send(file=discord.File("some.mp4"))
-        await ctx.send("Process completed, mp4!")
-        os.remove("some.mp4")
-    elif case[0] == 4:
-        await ctx.send(file=discord.File("some.mp3"))
-        await ctx.send("Process completed, mp3!")
-        os.remove("some.mp3")
-    elif case[0] == 5:
-        await ctx.send("Sorry, file too big!")
->>>>>>> 6189bca42932e93e54700cee3d10df1d28d70a00
 
 
 @bot.command(name="youtube")
