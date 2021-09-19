@@ -101,6 +101,15 @@ async def hug(ctx, arg=""):
     await ctx.send(embed=embed)
 
 
+@bot.command()
+async def emoji(ctx, emojiname):
+    for i in bot.guilds:
+        emoji = discord.utils.get(i.emojis, name=emojiname)
+        if emoji is not None:
+            await ctx.message.delete()
+            await ctx.send(emoji)
+
+
 @bot.command(name="say")
 async def say(ctx, *args):
     if args[0][2:-1].isnumeric():
