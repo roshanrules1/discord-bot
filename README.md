@@ -2,7 +2,7 @@
 
 *Note: THIS BOT IS PRIVATE DO NOT PUBLISH*
 
-Too run this code:
+To run this code:
 
 * Follow a tutorial to add a new bot to your server.
 
@@ -19,4 +19,3 @@ Too run this code:
   * [youtube-dl](https://pypi.org/project/youtube_dl/)
   * [ffmpeg-python](https://pypi.org/project/ffmpeg-python/)
  
-[My other projects](https://github.com/parzi-val/python-projects)
